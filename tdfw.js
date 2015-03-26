@@ -226,7 +226,8 @@
 
 		//embedVideo()
 		setupAnimations();
-        requestAnimationFrame(checkTime)
+        requestAnimationFrame(checkTime);
+        addCurStyles();
 	}
 	init()
 
