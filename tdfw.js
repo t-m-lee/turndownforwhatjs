@@ -36,76 +36,16 @@
 		}
 	};
 	var firstAddition = true;
-	//function embedVideo() {
-	//	var parent = document.createElement('div');
-	//	parent.style.position = 'fixed';
-	//	parent.style.zIndex = 5000;
-	//	parent.style.right = 0;
-	//	parent.style.top = 0;
-	//	parent.style.opacity = 0.2;
-	//	var div = document.createElement('div');
-	//	div.id = "tdfw";
-	//	parent.appendChild(div);
-	//	document.body.appendChild(parent);
-	//	parent.onmouseover = function() {
-	//		console.log('mouse');
-	//		parent.style.opacity = 1
-	//	};
-	//	parent.onmouseout = function() {
-	//		parent.style.opacity = 0.2
-	//	};
-	//	parent.style.webkitTransition = 'opacity 0.3s ease-in-out';
-	//	parent.style.transition = 'opacity 0.3s ease-in-out';
-    //
-	//	var tag = document.createElement('script');
-    //
-	//	tag.src = "https://www.youtube.com/iframe_api";
-	//	var firstScriptTag = document.body.appendChild(tag);
-	//	// 3. This function creates an <iframe> (and YouTube player)
-	//	//    after the API code downloads.
-	//	function onYouTubeIframeAPIReady() {
-	//		player = new YT.Player('tdfw', {
-	//			height: '200',
-	//			width: '305',
-	//			videoId: 'HMUDVMiITOU',
-	//			events: {
-	//				'onReady': onPlayerReady,
-	//				'onStateChange': onPlayerStateChange
-	//			}
-	//		});
-	//	}
-	//	window.onYouTubeIframeAPIReady = onYouTubeIframeAPIReady
-	//}
-	//function onPlayerReady(event) {
-	//	console.log('ready');
-	//	event.target.playVideo();
-	//	requestAnimationFrame(checkTime)
-	//}
 	
 	function checkTime() {
-		if(turntDown) {
-			return false;
-		}
 		requestAnimationFrame(checkTime);
 		if(Date.now() - startTime > turndownAt) {
-			turntDown = true;
+			turntDown = !turntDown;
+            startTime = Date.now();
 			removeCurStyles();
-			addCurStyles()	
+			addCurStyles()	;
 		}
-
 	}
-	//function onPlayerStateChange(event) {
-	//	console.log(event);
-	//	if(event.data === 1) {
-	//		//started
-	//		addCurStyles()
-    //
-	//	} else if(event.data === 2) {
-	//		//paused
-	//		removeCurStyles()
-	//	}
-	//}
-	//<iframe width="560" height="315" src="//www.youtube.com/embed/HMUDVMiITOU?autoplay=1" frameborder="0" allowfullscreen></iframe>
 	
 	function setupAnimations() {
 		var numKeyFrames = 10;
@@ -152,8 +92,6 @@
 			allStyles += '@-webkit-keyframes turntDown' + i + ' { ' + kf + ' } ';
 			allStyles += '@keyframes turntDown' + i + ' { ' + kf + ' } '
 		}
-		//var introClass = '.tdfw_intro { -webkit-animation: tdfw 1s infinite; animation: tdfw 1s infinite; } ';
-		//allStyles += introClass
 		var style = document.createElement('style');
 		style.textContent = allStyles;
 		document.body.appendChild(style)
@@ -171,8 +109,6 @@
 
 		var max = maxNodes < nodes.length ? maxNodes : nodes.length;
 
-		//console.log(nodes)
-		//console.log(max)
 		for(var i = 0; i < max ; i++) {
 			var node = nodes[i];
 			
@@ -210,7 +146,7 @@
 		return ['tdfw_intro', 'turntDown']
 	}
 	function getCurClass() {
-		if(Date.now() - startTime > turndownAt) {
+		if(turntDown) {
 			return 'turntDown'
 		} else {
 			return 'tdfw_intro'
@@ -224,7 +160,6 @@
 		}
 		window.tdfw________TDFW = true;
 
-		//embedVideo()
 		setupAnimations();
         requestAnimationFrame(checkTime);
         addCurStyles();
