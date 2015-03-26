@@ -23,8 +23,8 @@
         };
 }());
 (function() {
-	var player;
-	var turndownAt = 20;
+	var startTime = Date.now();
+	var turndownAt = 20 * 1000;
 	var numTurntAnimations = 10;
 	var turntDown = false;
 	var maxNodes = 1000;
@@ -87,7 +87,7 @@
 			return false;
 		}
 		requestAnimationFrame(checkTime);
-		if(player.getCurrentTime() > turndownAt) {
+		if(Date.now() - startTime > turndownAt) {
 			turntDown = true;
 			removeCurStyles();
 			addCurStyles()	
@@ -210,7 +210,7 @@
 		return ['tdfw_intro', 'turntDown']
 	}
 	function getCurClass() {
-		if(player.getCurrentTime() > turndownAt) {
+		if(Date.now() - startTime > turndownAt) {
 			return 'turntDown'
 		} else {
 			return 'tdfw_intro'
@@ -225,7 +225,8 @@
 		window.tdfw________TDFW = true;
 
 		//embedVideo()
-		setupAnimations()
+		setupAnimations();
+        requestAnimationFrame(checkTime)
 	}
 	init()
 
